@@ -1,9 +1,13 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from tkinter import Tk, filedialog
+
+# Open file dialog to select image
+Tk().withdraw()  # Hide root window
+image_path = filedialog.askopenfilename(title="Select an image", filetypes=[("Image Files", "*.png;*.jpg;*.jpeg")])
 
 # Load image
-image_path = "X.png"  # Replace with image path
 image = cv2.imread(image_path)
 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
