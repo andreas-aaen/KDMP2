@@ -20,7 +20,7 @@ upper_yellow = np.array([35, 255, 255])
 mask = cv2.inRange(image_hsv, lower_yellow, upper_yellow)
 
 # Apply morphological operations to reduce noise
-kernel = np.ones((3, 3), np.uint8)
+kernel = np.ones((6, 8), np.uint8)
 mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
 mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
 
@@ -31,7 +31,7 @@ contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 output_image = image_rgb.copy()
 for contour in contours:
     x, y, w, h = cv2.boundingRect(contour)
-    cv2.rectangle(output_image, (x, y), (x + w, y + h), (255, 0, 0), 2)  # Blue rectangles
+    cv2.rectangle(output_image, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
 # Display the result
 plt.figure(figsize=(10, 6))
