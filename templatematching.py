@@ -76,14 +76,30 @@ def non_max_suppression(bboxes, overlap_thresh=0.3):
     return selected_bboxes
 
 # Apply non-max suppression to the collected bounding boxes
-filtered_bboxes = non_max_suppression(all_bboxes, overlap_thresh=0.3)
+filtered_bboxes = non_max_suppression(all_bboxes, overlap_thresh=0.2)
 
-# Draw the final bounding boxes on the image
+# List to store the center coordinates of each bounding box
+centers = []
+
+# Draw the final bounding boxes on the image and compute the center coordinates
 for (x1, y1, x2, y2) in filtered_bboxes:
+    # Draw the rectangle on the image
     cv.rectangle(img_rgb, (x1, y1), (x2, y2), (0, 0, 255), 2)
+    
+    # Compute the center of the bounding box
+    center_x = (x1 + x2) / 2
+    center_y = (y1 + y2) / 2
+    
+    # Add the center to the list
+    centers.append((center_x, center_y))
 
 # Display the result
 plt.imshow(cv.cvtColor(img_rgb, cv.COLOR_BGR2RGB))  # Convert to RGB for matplotlib
 plt.title(f'Matches Found (Threshold = {threshold}) with NMS')
 plt.axis('off')  # Hide axes for clarity
 plt.show()
+
+# Output the list of centers
+centers = [(int(center_x), int(center_y)) for center_x, center_y in centers]
+print("Center coordinates of bounding boxes:", centers)
+
