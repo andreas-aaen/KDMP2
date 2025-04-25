@@ -11,6 +11,7 @@ ground_truth_scores = [
 ]
 
 correct = 0
+tested = 0 
 
 for i in range(60, 75):
     grid = calculated_grid(f"{i}.jpg")
@@ -20,7 +21,8 @@ for i in range(60, 75):
     if score == gt:
         correct += 1
 
+    tested += 1
     print(f"{i}.jpg — Beregnet: {score}, Ground truth: {gt}")
 
-accuracy = correct / len(ground_truth_scores) * 100
-print(f"\nAndel præcist korrekte scores: {accuracy:.2f}% ({correct} ud af {len(ground_truth_scores)})")
+accuracy = correct / tested * 100
+print(f"\nAndel præcist korrekte scores: {accuracy:.2f}% ({correct} ud af {tested})")
