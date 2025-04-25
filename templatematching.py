@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
 from collections import Counter
+from pathlib import Path
 
 def templateMatching():
     # Load the image
@@ -9,8 +10,17 @@ def templateMatching():
     assert img_rgb is not None, "file could not be read, check with os.path.exists()"
     img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
 
+    def GetTemplates():
+        templates = []
+        Boards = Path.cwd() / "Templates"
+        for board in Boards.iterdir():
+            if board.is_file():
+                templates.append(str(board))  # Add the file path as a string
+        return templates
+
+    templates = GetTemplates()
+
     # List of template filenames
-    templates = ['crN.png', 'crE.png', 'crS.png', 'crW.png']
     threshold = 0.6
     all_bboxes = []
 
