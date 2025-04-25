@@ -78,6 +78,9 @@ def non_max_suppression(bboxes, overlap_thresh=0.3):
 # Apply non-max suppression to the collected bounding boxes
 filtered_bboxes = non_max_suppression(all_bboxes, overlap_thresh=0.2)
 
+# Print number of identifications
+print(f"Number of identifications found: {len(filtered_bboxes)}")
+
 # List to store the center coordinates of each bounding box
 centers = []
 
@@ -85,11 +88,11 @@ centers = []
 for (x1, y1, x2, y2) in filtered_bboxes:
     # Draw the rectangle on the image
     cv.rectangle(img_rgb, (x1, y1), (x2, y2), (0, 0, 255), 2)
-    
+
     # Compute the center of the bounding box
     center_x = (x1 + x2) / 2
     center_y = (y1 + y2) / 2
-    
+
     # Add the center to the list
     centers.append((center_x, center_y))
 
@@ -102,4 +105,3 @@ plt.show()
 # Output the list of centers
 centers = [(int(center_x), int(center_y)) for center_x, center_y in centers]
 print("Center coordinates of bounding boxes:", centers)
-
