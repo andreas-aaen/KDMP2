@@ -1,4 +1,4 @@
-
+# Import libraries
 from sklearn.cluster import KMeans
 from tkinter import simpledialog
 import matplotlib.pylab as plt
@@ -7,7 +7,10 @@ import tkinter as tk
 import numpy as np
 import cv2
 
+# Define the amount of clusters we use
 Terrain_clusters = 9
+
+# Manual classification of clusters
 cluster_names = {
 0: "Forest",
 1: "Lake",
@@ -20,7 +23,7 @@ cluster_names = {
 8: "Grassland"
 }
 
-
+# Dividing the board into 100x100 pixels and appending the tiles to a tileslist and returning it.
 def TileDivsion():
     folder = Path.cwd() / "Train_boards"
     BoardCount = 0
@@ -31,6 +34,7 @@ def TileDivsion():
 
     for board in folder.iterdir():
         if board.is_file():
+            # Converting the colors from RGB to HSV for higher accuracy
             img = cv2.imread(str(board))
             boardHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
             BoardCount +=1
@@ -44,6 +48,8 @@ def TileDivsion():
     print(f"Boards: {BoardCount}, Tiles: {TileCount}")
     return TileList 
 
+
+# Defining K means after flattening the images, and returning the clusters and the model itself.
 def Clustering(TilesList, Terrain_clusters):
     FlatTileList = []
     for tile in TilesList:
@@ -58,6 +64,7 @@ def Clustering(TilesList, Terrain_clusters):
     return labels, Model
 
 
+# Creating an input UI and converting the number of the image into Integers and extracting the board from the folder and returning the image.
 def GetBoard():
     root = tk.Tk()
     root.withdraw()
@@ -76,7 +83,7 @@ def GetBoard():
 
     return img
 
-
+# Getting an image from our test boards and applying the model, then returning a list of lists with dictionaries.
 def IdentifyBoard(Board, Model, cluster_names):
     tiles =  []
     flattened_tiles = []
