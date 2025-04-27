@@ -45,28 +45,3 @@ def calculate_kingdomino_score(grid):
             total_score += region_score
 
     return total_score
-
-def main():
-    #Test grid (picture 1)
-    grid_1 = [
-        [{'type': 'grass', 'crowns': 0}, {'type': 'water', 'crowns': 0}, {'type': 'forest', 'crowns': 0}, {'type': 'forest', 'crowns': 0}, {'type': 'forest', 'crowns': 0}],
-        [{'type': 'grass', 'crowns': 0}, {'type': 'forest', 'crowns': 0}, {'type': 'forest', 'crowns': 0}, {'type': 'forest', 'crowns': 1}, {'type': 'grass', 'crowns': 0}],
-        [{'type': 'grass', 'crowns': 0}, {'type': 'swamp', 'crowns': 1}, None,                              {'type': 'forest', 'crowns': 0}, {'type': 'grass', 'crowns': 0}],
-        [{'type': 'grass', 'crowns': 0}, {'type': 'swamp', 'crowns': 2}, {'type': 'lake', 'crowns': 0}, {'type': 'grass', 'crowns': 2}, {'type': 'grass', 'crowns': 1}],
-        [{'type': 'forest', 'crowns': 0}, {'type': 'lake', 'crowns': 1}, {'type': 'lake', 'crowns': 0}, {'type': 'grass', 'crowns': 1}, {'type': 'field', 'crowns': 0}]
-    ]
-    #Test grid (picture 2)
-    grid_2 = [
-        [{'type': 'field', 'crowns': 0}, {'type': 'swamp', 'crowns': 0}, {'type': 'field', 'crowns': 0}, {'type': 'mine', 'crowns': 2}, {'type': 'swamp', 'crowns': 0}],
-        [{'type': 'mine', 'crowns': 1}, {'type': 'swamp', 'crowns': 1}, {'type': 'field', 'crowns': 0}, {'type': 'field', 'crowns': 0}, {'type': 'forest', 'crowns': 0}],
-        [{'type': 'mine', 'crowns': 2}, {'type': 'swamp', 'crowns': 0},         None,                   {'type': 'field', 'crowns': 0}, {'type': 'field', 'crowns': 0}],
-        [{'type': 'mine', 'crowns': 2}, {'type': 'mine', 'crowns': 3}, {'type': 'grass', 'crowns': 0}, {'type': 'grass', 'crowns': 0}, {'type': 'field', 'crowns': 1}],
-        [{'type': 'field', 'crowns': 0}, {'type': 'field', 'crowns': 0}, {'type': 'swamp', 'crowns': 0}, {'type': 'swamp', 'crowns': 0}, {'type': 'grass', 'crowns': 0}]
-    ]
-
-    # Calculate and print the score
-    score = calculate_kingdomino_score(grid_2)
-    print(f"Total Kingdomino Score: {score}")
-
-if __name__ == "__main__":
-    main()
