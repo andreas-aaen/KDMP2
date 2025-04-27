@@ -69,7 +69,7 @@ def GetBoard():
 
     num = int(img_num)
 
-    Boards = Path.cwd() / "Test_Boards"
+    Boards = Path.cwd() / "Train_Boards"
     img = Boards / f"{num}.jpg"
 
     print(f"Selected Board: {img_num}")
@@ -134,9 +134,3 @@ def IdentifyBoard(Board, Model, cluster_names):
     plt.tight_layout()
     plt.show()
     return tile_grid
-
-
-
-
-
-        

@@ -4,10 +4,10 @@ from matplotlib import pyplot as plt
 from collections import Counter
 from pathlib import Path
 
-def templateMatching():
-    # Load the image
-    img_rgb = cv.imread('1.jpg')
-    assert img_rgb is not None, "file could not be read, check with os.path.exists()"
+def templateMatching(board_path):  # Take the board path as input
+    # Load the selected board image
+    img_rgb = cv.imread(str(board_path))  # Read the passed board
+    assert img_rgb is not None, f"File {board_path} could not be read, check if the path is correct"
     img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
 
     def GetTemplates():
@@ -20,21 +20,20 @@ def templateMatching():
 
     templates = GetTemplates()
 
-    # List of template filenames
-    threshold = 0.6
-    all_bboxes = []
+    threshold = 0.6 # Confidence threshold for matching the templates
+    all_bboxes = [] # Will contain coordinates for all bounding boxes for detected crowns
 
     for template_filename in templates:
         template = cv.imread(template_filename, cv.IMREAD_GRAYSCALE)
-        assert template is not None, f"file {template_filename} could not be read"
+        assert template is not None, f"Template file {template_filename} could not be read"
         w, h = template.shape[::-1]
-        res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
+        res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED) # Template Matching
         loc = np.where(res >= threshold)
 
         for pt in zip(*loc[::-1]):
-            all_bboxes.append((pt[0], pt[1], pt[0] + w, pt[1] + h))
+            all_bboxes.append((pt[0], pt[1], pt[0] + w, pt[1] + h)) # Append bounding box if it is a match
 
-    def non_max_suppression(bboxes, overlap_thresh=0.3):
+    def non_max_suppression(bboxes, overlap_thresh=0.3): # Ensure bounding boxes don't overlap so a crown is counted twice
         if len(bboxes) == 0:
             return []
         bboxes = np.array(bboxes)
@@ -58,9 +57,9 @@ def templateMatching():
 
         return selected_bboxes
 
-    filtered_bboxes = non_max_suppression(all_bboxes, overlap_thresh=0.2)
+    filtered_bboxes = non_max_suppression(all_bboxes, overlap_thresh=0.2) # Filter bounding boxes after ensuring there is no overlapping
 
-    compressed_centers = []
+    compressed_centers = [] # If a coordinate at the centre of a bounding box is (300, 200), make it (3, 2), which corresponds to a tile on the 5x5 board grid.
     for (x1, y1, x2, y2) in filtered_bboxes:
         center_x = int((x1 + x2) / 2)
         center_y = int((y1 + y2) / 2)
@@ -68,10 +67,8 @@ def templateMatching():
         first_digit_y = int(str(center_y)[0])
         compressed_centers.append((first_digit_x, first_digit_y))
 
-    # Count and display occurrences
+    # Count occurrences
     counts = Counter(compressed_centers)
-    print("\nCoordinate counts:")
-    for coord, count in counts.items():
-        print(f"{coord}: {count}")
-
-templateMatching()
+    
+    # Return as a dictionary
+    return dict(counts)
