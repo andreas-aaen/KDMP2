@@ -11,7 +11,7 @@ def updateBoardCrowns(board, crown_data):
     return board
 
 def main():
-    # Step 1: Train clustering model
+    # Step 1: Clustering model
     TileList = TileDivsion()
     Labels, Model = Clustering(TileList, Terrain_clusters)
 
@@ -32,7 +32,7 @@ def main():
     for row in updated_tile_grid:
         print(row)
 
-    # Step 7: Now you could also calculate score here if you want
+    # Step 7: Calculate score
     score = calculate_kingdomino_score(updated_tile_grid)
     print(f"Final Score: {score}")
 
